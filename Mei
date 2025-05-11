@@ -1,0 +1,107 @@
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { Play, Pause } from "lucide-react";
+import Link from "next/link";
+
+export default function WeddingInvite() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      isPlaying ? audioRef.current.play() : audioRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  return (
+    <div className="bg-[#f5f1e8] text-[#2e2e2e] font-serif scroll-smooth">
+      <audio ref={audioRef} loop>
+        <source src="/mirrors.mp3" type="audio/mpeg" />
+      </audio>
+
+      <div className="fixed top-4 right-4 z-50">
+        <Button onClick={() => setIsPlaying(!isPlaying)} variant="ghost">
+          {isPlaying ? <Pause /> : <Play />}
+        </Button>
+      </div>
+
+      <section className="min-h-screen flex items-center justify-center px-4">
+        <motion.div
+          initial={{ y: 200, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1.2 }}
+          className="relative w-full max-w-md"
+        >
+          <div className="absolute -top-10 left-1/2 transform -translate-x-1/2 z-10">
+            <img src="/envelope-open.png" alt="Envelope" className="w-32" />
+          </div>
+          <Card className="bg-white text-center rounded-2xl shadow-lg border border-terra p-6 mt-20">
+            <CardContent>
+              <h1 className="text-3xl text-green-900 font-bold mb-2">Bruno & Maria</h1>
+              <p className="text-lg text-[#5c4438]">11 de Outubro de 2025</p>
+              <p className="mt-4">É com alegria que convidamos você para celebrar o nosso amor.</p>
+              <p className="mt-4 text-sm">Acesse este convite pelo link: <br />
+                <span className="text-green-800 font-medium">brunoemaria.vercel.app</span>
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
+      </section>
+
+      <section id="historia" className="py-16 px-6 bg-[#fffdf8] text-center">
+        <h2 className="text-2xl font-bold text-green-900 mb-4">Nossa História</h2>
+        <p className="max-w-2xl mx-auto text-[#5c4438] text-lg">
+          Tudo começou com um simples "oi" em uma tarde de outono. Entre conversas,
+          cafés e longas caminhadas, descobrimos que nossos corações batiam no mesmo ritmo.
+          Foram anos de companheirismo, aprendizados e sonhos construídos juntos. E agora,
+          chegou o momento de celebrar esse amor com quem sempre torceu por nós. 
+        </p>
+      </section>
+
+      <section id="galeria" className="py-16 px-6 bg-[#fef9f3] text-center">
+        <h2 className="text-2xl font-bold text-green-900 mb-4">Galeria de Fotos</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <img src="/fotos/1.jpg" alt="Foto 1" className="rounded-xl shadow" />
+          <img src="/fotos/2.jpg" alt="Foto 2" className="rounded-xl shadow" />
+          <img src="/fotos/3.jpg" alt="Foto 3" className="rounded-xl shadow" />
+        </div>
+      </section>
+
+      <section id="confirmar" className="py-16 px-6 bg-[#fffdf8] text-center">
+        <h2 className="text-2xl font-bold text-green-900 mb-4">Confirme sua Presença</h2>
+        <form className="max-w-md mx-auto text-left space-y-4">
+          <input type="text" placeholder="Seu nome" className="w-full p-2 border rounded-lg" />
+          <input type="email" placeholder="Seu email" className="w-full p-2 border rounded-lg" />
+          <select className="w-full p-2 border rounded-lg">
+            <option>Confirmo presença</option>
+            <option>Não poderei comparecer</option>
+          </select>
+          <Button className="w-full bg-green-700 text-white">Enviar</Button>
+        </form>
+      </section>
+
+      <section id="mensagens" className="py-16 px-6 bg-[#fef9f3] text-center">
+        <h2 className="text-2xl font-bold text-green-900 mb-4">Deixe sua Mensagem</h2>
+        <form className="max-w-md mx-auto text-left space-y-4">
+          <input type="text" placeholder="Seu nome" className="w-full p-2 border rounded-lg" />
+          <textarea placeholder="Sua mensagem de carinho" className="w-full p-2 border rounded-lg h-28"></textarea>
+          <Button className="w-full bg-green-700 text-white">Enviar</Button>
+        </form>
+      </section>
+
+      <section id="presentes" className="py-16 px-6 bg-[#fffdf8] text-center">
+        <h2 className="text-2xl font-bold text-green-900 mb-4">Lista de Presentes</h2>
+        <p className="text-[#5c4438] mb-4">Se desejar nos presentear, você pode escolher através da nossa lista virtual:</p>
+        <a
+          href="https://www.exemplo.com/lista-de-presentes"
+          target="_blank"
+          className="text-green-700 underline font-medium"
+        >
+          Acessar Lista de Presentes
+        </a>
+      </section>
+    </div>
+  );
+}
